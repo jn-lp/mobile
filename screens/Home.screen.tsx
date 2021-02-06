@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 export default function HomeScreen() {
   return (
@@ -16,12 +16,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-  message : {
+  message: {
     fontSize: 18,
-    color: 'black',
-    textAlign: "center"
-  }
+    color: "black",
+    textAlign: "center",
+  },
 });

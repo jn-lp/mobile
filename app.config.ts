@@ -1,4 +1,4 @@
-import { ExpoConfig, ConfigContext } from '@expo/config';
+import { ExpoConfig, ConfigContext } from "@expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   name: config.name ?? "mobile",
@@ -17,11 +17,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     color: "#110D16",
     iosDisplayInForeground: false,
     androidMode: "collapse",
-    androidCollapsedTitle: "#{unread_notifications} new interactions"
+    androidCollapsedTitle: "#{unread_notifications} new interactions",
   },
   ios: {
     bundleIdentifier: `${config._internal?.organizationIdentifier}.${config.name}`,
     isTabletOnly: false,
     requireFullScreen: false,
-  }
+  },
 });
