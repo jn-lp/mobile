@@ -1,19 +1,43 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+import HomeScreen from './screens/Home.screen'
+import SecondScreen from './screens/Second.screen'
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <NavigationContainer>
+      <StatusBar style="auto" />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            switch (route.name) {
+              case "Home":
+                iconName = focused
+                  ? 'bonfire'
+                  : 'bonfire-outline';
+
+            }
+
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: '#D2444A',
+          inactiveTintColor: 'gray',
+        }}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'General' }} />
+        <Tab.Screen name="Item 2" component={SecondScreen} options={{ title: 'Item 2' }} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

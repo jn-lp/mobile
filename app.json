@@ -1,12 +1,6 @@
 {
   "name": "mobile",
-  "displayName": "mobile",
-  "expo": {
-    "name": "mobile",
-    "slug": "mobile",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+  "_internal": {
+    "organizationIdentifier": "ua.kpi.comsys.ip8512"
   }
 }
