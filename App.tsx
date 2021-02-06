@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import HomeScreen from './screens/Home.screen'
-import SecondScreen from './screens/Second.screen'
+import SecondScreen from './screens/TimeTest.screen'
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +23,10 @@ export default function App() {
                 iconName = focused
                   ? 'bonfire'
                   : 'bonfire-outline';
-
+              case "TimeTest":
+                iconName = focused
+                  ? 'time'
+                  : 'time-outline';
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -35,7 +38,7 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'General' }} />
-        <Tab.Screen name="Item 2" component={SecondScreen} options={{ title: 'Item 2' }} />
+        <Tab.Screen name="TimeTest" component={SecondScreen} options={{ title: 'Time Test' }} />
       </Tab.Navigator>
     </NavigationContainer>
   );
