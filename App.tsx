@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import HomeScreen from "./screens/Home.screen";
-import SecondScreen from "./screens/TimeTest.screen";
+import DrawScreen from "./screens/Draw.screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,8 +21,10 @@ export default function App() {
             switch (route.name) {
               case "Home":
                 iconName = focused ? "bonfire" : "bonfire-outline";
-              case "TimeTest":
-                iconName = focused ? "time" : "time-outline";
+                break;
+              case "Draw":
+                iconName = focused ? "pencil" : "pencil-outline";
+                break;
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -39,9 +41,9 @@ export default function App() {
           options={{ title: "General" }}
         />
         <Tab.Screen
-          name="TimeTest"
-          component={SecondScreen}
-          options={{ title: "Time Test" }}
+          name="Draw"
+          component={DrawScreen}
+          options={{ title: "Drawing" }}
         />
       </Tab.Navigator>
     </NavigationContainer>

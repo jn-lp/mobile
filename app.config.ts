@@ -8,7 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   privacy: "hidden",
   version: "0.1.0",
   githubUrl: "https://github.com/jn-lp/mobile",
-  orientation: "portrait",
+  orientation: "default",
   userInterfaceStyle: "automatic",
   backgroundColor: "#110D16",
   primaryColor: "#D2444A",
