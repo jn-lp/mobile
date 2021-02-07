@@ -1,15 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.message}>
         Лепейко Євген{`\n`}
         Група ІП-83{`\n`}
         ЗК ІП-8512
       </Text>
-    </View>
+    </SafeAreaView>
   );
 }
 
