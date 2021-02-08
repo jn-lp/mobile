@@ -1,25 +1,69 @@
-import React from "react";
-import { SafeAreaView, FlatList, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Button } from "react-native-elements";
 
-import Movie from "../components/Movie.component";
+import {
+  createStackNavigator,
+  HeaderBackButton,
+  TransitionPresets,
+} from "@react-navigation/stack";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function MoviesScreen() {
+import SearchScreen from "./Movies/Search.screen";
+import DetailsScreen from "./Movies/Details.screen";
+import AddModal from "./Movies/Add.modal";
+
+const Stack = createStackNavigator();
+
+export default function MoviesScreen({ navigation: { navigate } }) {
+  const [data, setData] = useState(
+    require("../assets/Movies/MoviesList.json").Search
+  );
+
+  const pushItem = (newData) => setData([...data, newData]);
+  const deleteItem = (index) => {
+    const arr = [...data];
+    arr.splice(index, 1);
+    setData(arr);
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        style={{ width: "100%", display: "flex" }}
-        data={require("../assets/MoviesList.json").Search}
-        renderItem={({ item }) => <Movie {...item} />}
-        keyExtractor={(item) => item.imdbID}
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Search"
+        options={{
+          title: "Search for movies",
+          headerRight: () => (
+            <Button
+              onPress={() => navigate("Movies", { screen: "Add" })}
+              type="clear"
+              icon={<Ionicons name="add" size={24} color="#D2444A" />}
+            />
+          ),
+        }}
+      >
+        {(props) => (
+          <SearchScreen {...props} data={data} deleteItem={deleteItem} />
+        )}
+      </Stack.Screen>
+      <Stack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerLeft: (props) => (
+            <HeaderBackButton {...props} tintColor="#D2444A" />
+          ),
+        })}
       />
-    </SafeAreaView>
+      <Stack.Screen
+        name="Add"
+        options={({ route }) => ({
+          headerShown: false,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+        })}
+      >
+        {(props) => <AddModal {...props} pushItem={pushItem} />}
+      </Stack.Screen>
+    </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
