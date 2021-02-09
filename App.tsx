@@ -8,6 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import HomeScreen from "./screens/Home.screen";
 import DrawScreen from "./screens/Draw.screen";
 import MoviesScreen from "./screens/Movies.screen";
+import ImagesScreen from "./screens/Images.screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,9 @@ export default function App() {
                 break;
               case "Movies":
                 iconName = focused ? "film" : "film-outline";
+                break;
+              case "Images":
+                iconName = focused ? "image" : "image-outline";
                 break;
             }
 
@@ -53,6 +57,11 @@ export default function App() {
           name="Movies"
           component={MoviesScreen}
           options={{ title: "Movies list" }}
+        />
+        <Tab.Screen
+          name="Images"
+          component={ImagesScreen}
+          options={{ title: "Images list" }}
         />
       </Tab.Navigator>
     </NavigationContainer>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, FlatList, StyleSheet } from "react-native";
 import { SearchBar } from "react-native-elements";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 import Movie from "../../components/Movie.component";
 
