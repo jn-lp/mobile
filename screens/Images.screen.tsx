@@ -1,64 +1,30 @@
 import React, { useState, useEffect } from "react";
-import {
-  SafeAreaView,
-  View,
-  Platform,
-  FlatList,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { View, Platform, FlatList, StyleSheet, Dimensions } from "react-native";
 import { Header, Button } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import Image from "../components/Image.component";
 
-export default function ImagesScreen({ data, deleteItem, navigation }) {
+// Supersecret token, store perform all API reqs on server side at production
+const API_KEY = "19193969-87191e5db266905fe8936d565";
+const REQUEST = "fun+party";
+
+export default function ImagesScreen({}) {
   const unit = Dimensions.get("window").width;
-  const [images, setImages] = useState([
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-    "https://ak.picdn.net/shutterstock/videos/1016939161/thumb/1.jpg",
-  ]);
+
+  const [isLoading, setLoading] = useState(true);
+  const [images, setImages] = useState(Array(30).fill({}));
 
   useEffect(() => {
+    fetch(
+      `https://pixabay.com/api/?key=${API_KEY}&q=${REQUEST}&image_type=photo&per_page=${images.length}`
+    )
+      .then((response) => response.json())
+      .then(({ hits }) => setImages(hits))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+
     (async () => {
       if (Platform.OS !== "web") {
         const {
@@ -112,7 +78,7 @@ export default function ImagesScreen({ data, deleteItem, navigation }) {
         data={images}
         renderItem={({ item, index }) => (
           <Image
-            uri={item}
+            image={item}
             order={index}
             size={index % 10 === 1 || index % 10 === 5 ? 2 : 1}
           />

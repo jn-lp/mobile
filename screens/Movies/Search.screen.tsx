@@ -4,8 +4,22 @@ import { SearchBar } from "react-native-elements";
 
 import Movie from "../../components/Movie.component";
 
-export default function SearchScreen({ data, deleteItem, navigation }) {
+// Supersecret token, store perform all API reqs on server side at production
+const API_KEY = "7e9fe69e";
+
+export default function SearchScreen({
+  data,
+  setData,
+  deleteItem,
+  navigation,
+}) {
   const [search, setSearch] = useState("");
+
+  const performSearch = (text) =>
+    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${text}&page=1`)
+      .then((response) => response.json())
+      .then(({ Search }) => Search && setData(Search))
+      .catch((error) => console.error(error));
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +57,10 @@ export default function SearchScreen({ data, deleteItem, navigation }) {
             containerStyle={styles.search}
             inputContainerStyle={styles.input}
             value={search}
-            onChangeText={(text) => setSearch(text)}
+            onChangeText={(text) => {
+              performSearch(text);
+              setSearch(text);
+            }}
           />
         }
       />

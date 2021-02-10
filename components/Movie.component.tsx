@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
-import MoviePosters from "../assets/Movies/Posters";
-
 const RightAction = ({ dragX, onPress }) => {
   const translateX = dragX.interpolate({
     inputRange: [-100, 0],
@@ -52,7 +50,7 @@ export default function Movie({
       <TouchableOpacity onPress={onPress}>
         <View style={styles.container}>
           <Image
-            source={MoviePosters[Poster]}
+            source={{uri:Poster}}
             style={{ height: 100, width: 80, marginRight: 20 }}
           />
           <View style={styles.filmBody}>

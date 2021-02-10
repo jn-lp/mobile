@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
+  View,
   SafeAreaView,
   ScrollView,
   Text,
@@ -7,30 +8,46 @@ import {
   Image,
 } from "react-native";
 
-import detailedMovies from "../../assets/Movies";
-import MoviePosters from "../../assets/Movies/Posters";
+// Supersecret token, store perform all API reqs on server side at production
+const API_KEY = "7e9fe69e";
 
 export default function DetailsScreen({ route, navigation }) {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState({});
+
   const { id } = route.params;
-  const filmData = detailedMovies[id];
+
+  useEffect(() => {
+    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`)
+      .then((response) => response.json())
+      .then(setData)
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <SafeAreaView>
-      <ScrollView style={styles.container}>
-        <Image
-          source={MoviePosters[filmData.Poster]}
-          resizeMode="contain"
-          style={{ width: "100%", marginRight: 20 }}
-        />
-        {Object.keys(filmData).map((key) => (
-          <Text key={key} style={styles.key}>
-            {key}:{" "}
-            <Text key={key} style={styles.text}>
-              {filmData[key]}
-            </Text>
-          </Text>
-        ))}
-      </ScrollView>
+      {isLoading ? (
+        <View />
+      ) : (
+        <ScrollView style={styles.container}>
+          <Image
+            source={{ uri: data.Poster }}
+            resizeMode="cover"
+            style={{ width: 300, height: 450, marginHorizontal: "auto" }}
+          />
+          {Object.entries(data)
+            .filter(([, value]) => !Array.isArray(value))
+            .map(([key, value]) => (
+              <Text key={key} style={styles.key}>
+                {key}:{" "}
+                <Text key={key} style={styles.text}>
+                  {value}
+                </Text>
+              </Text>
+            ))}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

@@ -15,11 +15,9 @@ import AddModal from "./Movies/Add.modal";
 const Stack = createStackNavigator();
 
 export default function MoviesScreen({ navigation: { navigate } }) {
-  const [data, setData] = useState(
-    require("../assets/Movies/MoviesList.json").Search
-  );
+  const [data, setData] = useState([]);
 
-  const pushItem = (newData) => setData([...data, newData]);
+  const pushItem = (...newData) => setData([...data, ...newData]);
   const deleteItem = (index) => {
     const arr = [...data];
     arr.splice(index, 1);
@@ -42,7 +40,12 @@ export default function MoviesScreen({ navigation: { navigate } }) {
         }}
       >
         {(props) => (
-          <SearchScreen {...props} data={data} deleteItem={deleteItem} />
+          <SearchScreen
+            {...props}
+            data={data}
+            setData={setData}
+            deleteItem={deleteItem}
+          />
         )}
       </Stack.Screen>
       <Stack.Screen

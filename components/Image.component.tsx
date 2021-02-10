@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Image as Img } from "react-native";
 
 const unit = 25;
 
-export default function Image({ order, uri, size }) {
+export default function Image({ order, image, size }) {
   let left = 0,
     top = 0;
   switch (order % 10) {
@@ -43,7 +43,9 @@ export default function Image({ order, uri, size }) {
 
   return (
     <Img
-      source={{ uri }}
+      source={{
+        uri: image.previewURL,
+      }}
       style={{
         backgroundColor: "#777",
         position: "absolute",
@@ -52,7 +54,7 @@ export default function Image({ order, uri, size }) {
         width: `${unit * size}%`,
         height: `${unit * size}%`,
       }}
-      resizeMode="center"
+      resizeMode="contain"
     />
   );
 }
